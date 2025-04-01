@@ -129,7 +129,7 @@ void HeapSort(int *v,int n){
     }
 }
 
-int Partition(int *v, int p, int r){
+int Partition(int *v,int p,int r){
     int i,j,x,aux;
     x=v[p]; //Pivo pode ser uma função que escolhe aleatório
     j=r+1;
@@ -152,7 +152,7 @@ int Partition(int *v, int p, int r){
     }
 }
 
-void QuickSort(int *v, int p, int r){
+void QuickSort(int *v,int p,int r){
     if(p<r){
         int q;
         q=Partition(v,p,r);
@@ -181,32 +181,28 @@ void CountingSort(int *v,int n){
     }
 }
 
-void CountingSortR(int *v, int n, int exp) {
-    int output[n];
-    int count[10] = {0};
-
-    for (int i = 0; i < n; i++) {
-        count[(v[i] / exp) % 10]++;
+void CountingSortR(int *v,int n,int exp){
+    int aux[n];
+    int cont[10]={};
+    for (int i=0;i<n;i++){
+        cont[(v[i]/exp)%10]++;
     }
-
-    for (int i = 1; i < 10; i++) {
-        count[i] += count[i - 1];
+    for (int i=1;i<10;i++){
+        cont[i]+=cont[i-1];
     }
-
-    for (int i = n - 1; i >= 0; i--) {
-        output[count[(v[i] / exp) % 10] - 1] = v[i];
-        count[(v[i] / exp) % 10]--;
+    for (int i=n-1;i>=0;i--){
+        aux[cont[(v[i]/exp)%10]-1]=v[i];
+        cont[(v[i]/exp)%10]--;
     }
-
-    for (int i = 0; i < n; i++) {
-        v[i] = output[i];
+    for (int i=0;i<n;i++){
+        v[i]=aux[i];
     }
 }
 
-void RadixSort(int *v, int n) {
-    int max = GetMax(v, n);
-    for (int exp = 1; max / exp > 0; exp *= 10) {
-        CountingSortR(v, n, exp);
+void RadixSort(int *v, int n){
+    int max=GetMax(v,n);
+    for (int exp=1;max/exp > 0;exp*=10){
+        CountingSortR(v,n,exp);
     }
 }
 
